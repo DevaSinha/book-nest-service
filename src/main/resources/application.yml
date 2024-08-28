@@ -6,3 +6,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
     locations: classpath:db/migration
+  security:
+    noAuthUrls:
+      - /v1/login
+      - /v1/users
+      - /v1/users/**

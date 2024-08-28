@@ -42,7 +42,7 @@ public class UserController {
                     description = "Server error",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping()
+    @PostMapping("/register")
     public ResponseEntity<SuccessResponse<User>> createUser(@RequestBody @Valid User user) {
         return new ResponseEntity<>(new SuccessResponse<>(userService.saveUser(user)), HttpStatus.CREATED);
     }

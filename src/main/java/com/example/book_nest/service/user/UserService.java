@@ -24,38 +24,32 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // Create or Update User
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    // Retrieve User by ID
     public Optional<User> getUserById(Integer userId) {
         return userRepository.findById(userId);
     }
 
-
-    // Retrieve All Users
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // Delete User by ID
     public void deleteUser(Integer userId) {
         userRepository.deleteById(userId);
     }
 
     public User verifyUser(AuthUser userData){
-        // Use Optional directly
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(userData.getEmail()));
-        User user = userOptional.orElseThrow(() -> new UserNotFoundException("User Does Not Exist"));
+        User user = userRepository.findByEmail(userData.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User Does Not Exist"));
         if (!checkPassword(userData.getPassword(), user.getPassword())) {
             throw new AuthenticationException("Wrong Password");
         }
+
         return user;
     }
-
     public boolean checkPassword(String enteredPassword, String password) {
         return passwordEncoder.matches(enteredPassword, password);
     }
