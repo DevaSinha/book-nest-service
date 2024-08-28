@@ -1,6 +1,9 @@
 package com.example.book_nest.service.user;
 
 import com.example.book_nest.domain.user.User;
+import com.example.book_nest.dto.user.AuthUser;
+import com.example.book_nest.exception.user.AuthenticationException;
+import com.example.book_nest.exception.user.UserNotFoundException;
 import com.example.book_nest.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,14 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    // Additional business logic methods as needed
+    public User verifyUser(AuthUser userData){
+        // Use Optional directly
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(userData.getEmail()));
+        User user = userOptional.orElseThrow(() -> new UserNotFoundException("User Does Not Exist"));
+        if (!user.getPassword().equals(userData.getPassword())) {
+            throw new AuthenticationException("Wrong Password");
+        }
+        return user;
+    }
 }
 

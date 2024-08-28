@@ -6,12 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
 @Getter
+@Setter
 public class ErrorResponse {
     @Schema(defaultValue = "error")
     private ResponseStatus status;
     private Error error;
+
+    public ErrorResponse(Error error){
+        this.error = error;
+        this.status = ResponseStatus.ERROR;
+    }
+
+    public static ErrorResponse of(Error error){
+        return new ErrorResponse(error);
+    }
 }
