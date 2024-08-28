@@ -6,6 +6,7 @@ import com.example.book_nest.exception.user.AuthenticationException;
 import com.example.book_nest.exception.user.UserNotFoundException;
 import com.example.book_nest.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -23,6 +26,7 @@ public class UserService {
 
     // Create or Update User
     public User saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -46,10 +50,14 @@ public class UserService {
         // Use Optional directly
         Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(userData.getEmail()));
         User user = userOptional.orElseThrow(() -> new UserNotFoundException("User Does Not Exist"));
-        if (!user.getPassword().equals(userData.getPassword())) {
+        if (!checkPassword(userData.getPassword(), user.getPassword())) {
             throw new AuthenticationException("Wrong Password");
         }
         return user;
+    }
+
+    public boolean checkPassword(String enteredPassword, String password) {
+        return passwordEncoder.matches(enteredPassword, password);
     }
 }
 
