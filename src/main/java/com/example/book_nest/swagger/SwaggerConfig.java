@@ -7,11 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@SecurityScheme(
-        name = "basicAuthentication",
-        type = SecuritySchemeType.HTTP,
-        scheme = "basic"
-)
+@SecurityScheme(name = "basicAuthentication", type = SecuritySchemeType.HTTP, scheme = "basic")
 @OpenAPIDefinition(info = @Info(title = "Book Nest", version = "v1"))
-public class SwaggerConfig{
+public class SwaggerConfig {
 }

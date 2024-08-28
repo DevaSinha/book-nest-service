@@ -13,16 +13,16 @@ import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({AuthenticationException.class})
-    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex){
-        Error error = new Error(ex.getCode().getValue(), List.of(ex.getMessage()));
-        return new ResponseEntity<>(new ErrorResponse(error), HttpStatus.UNAUTHORIZED);
-    }
-    @ExceptionHandler({UserNotFoundException.class})
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex){
-        Error error = new Error(ex.getCode().getValue(), List.of(ex.getMessage()));
-        return new ResponseEntity<>(new ErrorResponse(error), HttpStatus.NOT_FOUND);
-    }
+	@ExceptionHandler({ AuthenticationException.class })
+	public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
+		Error error = new Error(ex.getCode().getValue(), List.of(ex.getMessage()));
+		return new ResponseEntity<>(new ErrorResponse(error), HttpStatus.UNAUTHORIZED);
+	}
 
+	@ExceptionHandler({ UserNotFoundException.class })
+	public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex) {
+		Error error = new Error(ex.getCode().getValue(), List.of(ex.getMessage()));
+		return new ResponseEntity<>(new ErrorResponse(error), HttpStatus.NOT_FOUND);
+	}
 
 }

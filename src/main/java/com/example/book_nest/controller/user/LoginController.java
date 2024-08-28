@@ -20,25 +20,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/login")
 @CrossOrigin
 public class LoginController {
-    private final UserService userService;
+	private final UserService userService;
 
-    @Autowired
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
-    @Operation(summary = "Login user")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "logged in successfully"),
-        @ApiResponse(responseCode = "400",
-                description = "Invalid request",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(responseCode = "500",
-                description = "Server error",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
-    })
-    @PostMapping
-    public ResponseEntity<SuccessResponse<User>> login(@RequestBody AuthUser userData) {
-        User user = userService.verifyUser(userData);
-        return ResponseEntity.ok(new SuccessResponse<>(user));
-    };
+	@Autowired
+	public LoginController(UserService userService) {
+		this.userService = userService;
+	}
+
+	@Operation(summary = "Login user")
+	@ApiResponses(
+			value = { @ApiResponse(responseCode = "200", description = "logged in successfully"),
+					@ApiResponse(
+							responseCode = "400",
+							description = "Invalid request",
+							content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+					@ApiResponse(
+							responseCode = "500",
+							description = "Server error",
+							content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
+	@PostMapping
+	public ResponseEntity<SuccessResponse<User>> login(@RequestBody AuthUser userData) {
+		User user = userService.verifyUser(userData);
+		return ResponseEntity.ok(new SuccessResponse<>(user));
+	};
 }

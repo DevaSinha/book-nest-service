@@ -16,39 +16,29 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private SecurityProperties securityProperties;
+	@Autowired
+	private SecurityProperties securityProperties;
 
-    @Bean
-/*    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> {
-                    securityProperties.getNoAuthUrls().forEach(url -> auth.requestMatchers(url).permitAll());
-                    auth.anyRequest().authenticated();
-                })
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                )
-                .logout(LogoutConfigurer::permitAll);
+	@Bean
+	/*
+	 * public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+	 * Exception { http .csrf(AbstractHttpConfigurer::disable)
+	 * .authorizeHttpRequests(auth -> {
+	 * securityProperties.getNoAuthUrls().forEach(url ->
+	 * auth.requestMatchers(url).permitAll()); auth.anyRequest().authenticated(); })
+	 * .formLogin(form -> form .loginPage("/login") .permitAll() )
+	 * .logout(LogoutConfigurer::permitAll);
+	 * 
+	 * return http.build(); }
+	 */
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests.anyRequest().permitAll());
 
-        return http.build();
-    }
-*/
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().permitAll()
-                );
+		return http.build();
+	}
 
-        return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
-

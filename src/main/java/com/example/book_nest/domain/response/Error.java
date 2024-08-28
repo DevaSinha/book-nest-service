@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Error {
-    private String code;
-    private List<String> messages;
+	private String code;
+	private List<String> messages;
 }

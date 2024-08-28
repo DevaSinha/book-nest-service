@@ -7,15 +7,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SuccessResponse<T>{
-    private ResponseStatus status;
-    private T data;
+public class SuccessResponse<T> {
+	private ResponseStatus status;
+	private T data;
 
-    public SuccessResponse(T data) {
-        this.status = ResponseStatus.SUCCESS;
-        this.data = data;
-    }
-    public static <T> SuccessResponse<T> of (T response){
-        return new SuccessResponse(response);
-    }
+	public SuccessResponse(T data) {
+		this.status = ResponseStatus.SUCCESS;
+		this.data = data;
+	}
+
+	public static <T> SuccessResponse<T> of(T response) {
+		return new SuccessResponse(response);
+	}
 }

@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthUser {
-    private String email;
-    private String password;
+	private String email;
+	private String password;
 }

@@ -26,45 +26,47 @@ import java.util.Optional;
 @CrossOrigin
 public class UserController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-    @Operation(summary = "Create User")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User created successfully"),
-            @ApiResponse(responseCode = "400",
-                    description = "Invalid request",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "500",
-                    description = "Server error",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
-    })
-    @PostMapping("/register")
-    public ResponseEntity<SuccessResponse<User>> createUser(@RequestBody @Valid User user) {
-        return new ResponseEntity<>(new SuccessResponse<>(userService.saveUser(user)), HttpStatus.CREATED);
-    }
+	@Autowired
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
-    @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable Integer id) {
-        return userService.getUserById(id);
-    }
+	@Operation(summary = "Create User")
+	@ApiResponses(
+			value = { @ApiResponse(responseCode = "201", description = "User created successfully"),
+					@ApiResponse(
+							responseCode = "400",
+							description = "Invalid request",
+							content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+					@ApiResponse(
+							responseCode = "500",
+							description = "Server error",
+							content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
+	@PostMapping("/register")
+	public ResponseEntity<SuccessResponse<User>> createUser(@RequestBody @Valid User user) {
+		return new ResponseEntity<>(new SuccessResponse<>(userService.saveUser(user)), HttpStatus.CREATED);
+	}
 
-    @Operation(summary = "Fetch All User")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Users fetched successfully"),
-            @ApiResponse(responseCode = "400",
-                    description = "Invalid request",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "500",
-                    description = "Server error",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
-    })
-    @GetMapping
-    public ResponseEntity<SuccessResponse<List<User>>> getAllUsers() {
-        return ResponseEntity.ok(new SuccessResponse<>(userService.getAllUsers()));
-    }
+	@GetMapping("/{id}")
+	public Optional<User> getUserById(@PathVariable Integer id) {
+		return userService.getUserById(id);
+	}
+
+	@Operation(summary = "Fetch All User")
+	@ApiResponses(
+			value = { @ApiResponse(responseCode = "200", description = "Users fetched successfully"),
+					@ApiResponse(
+							responseCode = "400",
+							description = "Invalid request",
+							content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+					@ApiResponse(
+							responseCode = "500",
+							description = "Server error",
+							content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
+	@GetMapping
+	public ResponseEntity<SuccessResponse<List<User>>> getAllUsers() {
+		return ResponseEntity.ok(new SuccessResponse<>(userService.getAllUsers()));
+	}
 }
-

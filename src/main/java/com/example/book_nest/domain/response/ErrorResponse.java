@@ -9,16 +9,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ErrorResponse {
-    @Schema(defaultValue = "error")
-    private ResponseStatus status;
-    private Error error;
+	@Schema(defaultValue = "error")
+	private ResponseStatus status;
+	private Error error;
 
-    public ErrorResponse(Error error){
-        this.error = error;
-        this.status = ResponseStatus.ERROR;
-    }
+	public ErrorResponse(Error error) {
+		this.error = error;
+		this.status = ResponseStatus.ERROR;
+	}
 
-    public static ErrorResponse of(Error error){
-        return new ErrorResponse(error);
-    }
+	public static ErrorResponse of(Error error) {
+		return new ErrorResponse(error);
+	}
 }

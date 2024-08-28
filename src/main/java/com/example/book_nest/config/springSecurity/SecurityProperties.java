@@ -12,6 +12,5 @@ import java.util.List;
 @Getter
 @Setter
 public class SecurityProperties {
-    private List<String> noAuthUrls;
+	private List<String> noAuthUrls;
 }
-

@@ -1,13 +1,29 @@
 spring:
+
   datasource:
     url: jdbc:mysql://localhost:3306/book-nest
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   flyway:
     locations: classpath:db/migration
+
   security:
     noAuthUrls:
       - /v1/login
       - /v1/users
       - /v1/users/**
+
+  logging:
+    config: classpath:logback-spring.yml
+    level: INFO
+  appenders:
+    console:
+      type: console
+      encoder:
+        pattern: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  root:
+    level: INFO
+    appender-ref:
+      ref: console
